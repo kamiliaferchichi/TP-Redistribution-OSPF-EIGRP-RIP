@@ -1,0 +1,107 @@
+R3#show running-config
+Building configuration...
+
+Current configuration : 1035 bytes
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+ip cef
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+no ipv6 cef
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet1/0
+ ip address 10.0.13.3 255.255.255.0
+ duplex full
+!
+interface Ethernet1/1
+ ip address 10.0.34.3 255.255.255.0
+ duplex full
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+ duplex full
+!
+!
+router eigrp 1
+ network 10.0.34.0 0.0.0.255
+ redistribute ospf 1 metric 100 100 100 100 100
+ distance eigrp 90 105
+!
+router ospf 1
+ router-id 3.3.3.3
+ redistribute eigrp 1 metric 50 subnets
+ network 10.0.13.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+end
+
+R3#
